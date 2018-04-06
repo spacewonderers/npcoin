@@ -1,4 +1,6 @@
-// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers, The NPCoin developers
+
+// Copyright (c) 2018, The NPCoin developers
 //
 // This file is part of Bytecoin.
 //
@@ -553,7 +555,7 @@ if (command_line::has_arg(vm, arg_CHECKPOINT) && checkpoint_args.size() != 0)
 }
 else
 {
-  if (command_line::get_arg(vm, arg_CRYPTONOTE_NAME) == "bytecoin") {
+  if (command_line::get_arg(vm, arg_CRYPTONOTE_NAME) == "npcoin") {
       checkpoint_input = CryptoNote::CHECKPOINTS;
   }
 }
