@@ -41,8 +41,8 @@ const uint32_t MIXIN_START_HEIGHT                          = 0;
 const uint32_t MANDATORY_TRANSACTION                          = 0;
 const uint32_t KILL_HEIGHT                          = 0;
 const uint64_t TAIL_EMISSION_REWARD                          = 0;
-const size_t CRYPTONOTE_COIN_VERSION                          = 0;
-const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                 = 0;
+const size_t CRYPTONOTE_COIN_VERSION                          = 1;
+const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                 = 30;
 const size_t ZAWY_DIFFICULTY_V2                          = 0;
 const uint8_t ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION   = 0;
 const uint32_t BUGGED_ZAWY_DIFFICULTY_BLOCK_INDEX                 = 0;
@@ -93,7 +93,7 @@ const size_t   FUSION_TX_MIN_IN_OUT_COUNT_RATIO              = 4;
 
 const uint32_t KEY_IMAGE_CHECKING_BLOCK_INDEX                = 0;
 const uint32_t UPGRADE_HEIGHT_V2                                = 1;
-const uint32_t UPGRADE_HEIGHT_V3                                = 2;
+const uint32_t UPGRADE_HEIGHT_V3                                = 30;
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
 const uint32_t UPGRADE_VOTING_WINDOW                         = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
 const uint32_t UPGRADE_WINDOW                                = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
@@ -145,7 +145,8 @@ const char     P2P_STAT_TRUSTED_PUB_KEY[]                    = "";
 //TODO Add here your network seed nodes
 const std::initializer_list<const char*> SEED_NODES = {
  "124.217.247.176:22444",
-  "198.187.30.199:22444"
+  "198.187.30.199:22444",
+  "165.227.206.98"
 };
 
 struct CheckpointData {
@@ -160,7 +161,9 @@ __attribute__((unused))
 // You may add here other checkpoints using the following format:
 // {<block height>, "<block hash>"},
 const std::initializer_list<CheckpointData> CHECKPOINTS = {
-  //{ 10000, "84b6345731e2702cdaadc6ce5e5238c4ca5ecf48e3447136b2ed829b8a95f3ad" },
+  { 5000, "cb87f612fcc35e452fd0148d59b4c78802517bb9706fedd40c5493d2afba2f1a" ,
+    10000, "5bf0f41283b24a7cabd17185fcaba13aa77969683949d93993e97ab1a80a7888"
+  },
 };
 } // CryptoNote
 
