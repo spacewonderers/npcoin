@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2017
-// Copyright (c) 2017-2018
-//
-//The CryptoNote developers, The Bytecoin developers and NPCoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 //
 // This file is part of Bytecoin.
 //
-// NPCoin is free software: you can redistribute it and/or modify
+// Bytecoin is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// NPCoin is distributed in the hope that it will be useful,
+// Bytecoin is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with NPCoin.  If not, see <http://www.gnu.org/licenses/>.
+// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
@@ -377,40 +374,6 @@ struct SendDelayedTransaction {
   };
 
   struct Response {
-    void serialize(CryptoNote::ISerializer& serializer);
-  };
-};
-
-struct TransactionOutputInformationSerialized {
-  // output info
-  uint8_t type;
-  uint64_t amount;
-  uint32_t globalOutputIndex;
-  uint32_t outputInTransaction;
-
-  // transaction info
-  std::string transactionHash;
-  std::string transactionPublicKey;
-  std::string outputKey;         // Type: Key 
-
-  void serialize(CryptoNote::ISerializer& serializer);
-};
-
-struct GetUnspendOuts {
-  struct Request {
-    std::string address;
-    std::string viewKey;
-    uint64_t amount;
-    uint32_t mixIn;
-    bool useDust;
-    uint64_t dustThreshold;
-
-    void serialize(CryptoNote::ISerializer& serializer);
-  };
-
-  struct Response {
-    std::vector<TransactionOutputInformationSerialized> outputs;
-
     void serialize(CryptoNote::ISerializer& serializer);
   };
 };

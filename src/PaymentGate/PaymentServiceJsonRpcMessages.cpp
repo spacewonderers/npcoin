@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2017
-// Copyright (c) 2017-2018
-//
-//The CryptoNote developers, The Bytecoin developers and NPCoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 //
 // This file is part of Bytecoin.
 //
-// NPCoin is free software: you can redistribute it and/or modify
+// Bytecoin is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// NPCoin is distributed in the hope that it will be useful,
+// Bytecoin is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with NPCoin.  If not, see <http://www.gnu.org/licenses/>.
+// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "PaymentServiceJsonRpcMessages.h"
 #include "Serialization/SerializationOverloads.h"
@@ -314,32 +311,6 @@ void SendDelayedTransaction::Request::serialize(CryptoNote::ISerializer& seriali
 }
 
 void SendDelayedTransaction::Response::serialize(CryptoNote::ISerializer& serializer) {
-}
-
-void GetUnspendOuts::Request::serialize(CryptoNote::ISerializer& serializer) {
-  if (!serializer(address, "address")) {
-    throw RequestSerializationError();
-  }
-
-  serializer(viewKey, "viewKey");
-  serializer(amount, "amount");
-  serializer(mixIn, "mixIn");
-  serializer(useDust, "useDust");
-  serializer(dustThreshold, "dustThreshold");
-}
-
-void GetUnspendOuts::Response::serialize(CryptoNote::ISerializer& serializer) {
-  serializer(outputs, "outputs");
-}
-
-void TransactionOutputInformationSerialized::serialize(CryptoNote::ISerializer& serializer) {
-  serializer(type, "type");
-  serializer(amount, "amount");
-  serializer(globalOutputIndex, "globalOutputIndex");
-  serializer(outputInTransaction, "outputInTransaction");
-  serializer(transactionHash, "transactionHash");
-  serializer(transactionPublicKey, "transactionPublicKey");
-  serializer(outputKey, "outputKey");
 }
 
 void SendFusionTransaction::Request::serialize(CryptoNote::ISerializer& serializer) {

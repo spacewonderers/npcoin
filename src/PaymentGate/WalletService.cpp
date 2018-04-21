@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2017
-// Copyright (c) 2017-2018
-//
-//The CryptoNote developers, The Bytecoin developers and NPCoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 //
 // This file is part of Bytecoin.
 //
-// NPCoin is free software: you can redistribute it and/or modify
+// Bytecoin is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// NPCoin is distributed in the hope that it will be useful,
+// Bytecoin is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with NPCoin.  If not, see <http://www.gnu.org/licenses/>.
+// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "WalletService.h"
 
@@ -231,28 +228,6 @@ PaymentService::TransactionRpcInfo convertTransactionWithTransfersToTransactionR
   }
 
   return transactionInfo;
-}
-
-std::vector<PaymentService::TransactionOutputInformationSerialized> convertWalletOutputsToTransactionOutputInformationSerialized(
-  const std::vector<CryptoNote::WalletOutput>& outputs) {
-
-  std::vector<PaymentService::TransactionOutputInformationSerialized> rpcOutputs;
-  rpcOutputs.reserve(outputs.size());
-  for (const auto& output: outputs) {
-    PaymentService::TransactionOutputInformationSerialized rpcOutput;
-
-    rpcOutput.type = output.type;
-    rpcOutput.amount = output.amount;
-    rpcOutput.globalOutputIndex = output.globalOutputIndex;
-    rpcOutput.outputInTransaction = output.outputInTransaction;
-    rpcOutput.transactionHash = output.transactionHash;
-    rpcOutput.transactionPublicKey = output.transactionPublicKey;
-    rpcOutput.outputKey = output.outputKey;
-
-    rpcOutputs.push_back(std::move(rpcOutput));
-  }
-
-  return rpcOutputs;
 }
 
 std::vector<PaymentService::TransactionsInBlockRpcInfo> convertTransactionsInBlockInfoToTransactionsInBlockRpcInfo(
@@ -1030,28 +1005,6 @@ std::error_code WalletService::getUnconfirmedTransactionHashes(const std::vector
     return x.code();
   } catch (std::exception& x) {
     logger(Logging::WARNING, Logging::BRIGHT_YELLOW) << "Error while getting unconfirmed transaction hashes: " << x.what();
-    return make_error_code(CryptoNote::error::INTERNAL_WALLET_ERROR);
-  }
-
-  return std::error_code();
-}
-
-std::error_code WalletService::getUnspendOuts(const GetUnspendOuts::Request& request, std::vector<TransactionOutputInformationSerialized>& outputs) {
-  try {
-    System::EventLock lk(readyEvent);
-
-    if (!CryptoNote::validateAddress(request.address, currency)) {
-      logger(Logging::WARNING, Logging::BRIGHT_YELLOW) << "Can't validate address " << request.address;
-      throw std::system_error(make_error_code(CryptoNote::error::BAD_ADDRESS));
-    }
-
-    auto outs = wallet.getAddressOutputs(request.address);
-
-    outputs = convertWalletOutputsToTransactionOutputInformationSerialized(outs);
-
-    logger(Logging::DEBUGGING) << "Got unspend outs for address " << request.address;
-  } catch (std::exception& x) {
-    logger(Logging::WARNING, Logging::BRIGHT_YELLOW) << "Error while getting unspend outs: " << x.what();
     return make_error_code(CryptoNote::error::INTERNAL_WALLET_ERROR);
   }
 

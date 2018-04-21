@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2017
-// Copyright (c) 2017-2018
-//
-//The CryptoNote developers, The Bytecoin developers and NPCoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 //
 // This file is part of Bytecoin.
 //
-// NPCoin is free software: you can redistribute it and/or modify
+// Bytecoin is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// NPCoin is distributed in the hope that it will be useful,
+// Bytecoin is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with NPCoin.  If not, see <http://www.gnu.org/licenses/>.
+// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <alloca.h>
 #include <cassert>
@@ -64,6 +61,14 @@ namespace Crypto {
     ge_scalarmult_base(&point, reinterpret_cast<unsigned char*>(&sec));
     ge_p3_tobytes(reinterpret_cast<unsigned char*>(&pub), &point);
   }
+
+void crypto_ops::generate_keys_from_seed(PublicKey &pub, SecretKey &sec, SecretKey &seed) {
+  ge_p3 point;
+  sec = seed;
+  sc_reduce32(reinterpret_cast<unsigned char*>(&sec));
+  ge_scalarmult_base(&point, reinterpret_cast<unsigned char*>(&sec));
+  ge_p3_tobytes(reinterpret_cast<unsigned char*>(&pub), &point);
+}
 
   bool crypto_ops::check_key(const PublicKey &key) {
     ge_p3 point;
@@ -341,15 +346,22 @@ namespace Crypto {
 #ifdef _MSC_VER
 #pragma warning(disable: 4200)
 #endif
+
   struct ec_point_pair {
     EllipticCurvePoint a, b;
   };
   struct rs_comm {
+  Hash h;
+  struct ec_point_pair ab[];
+};
+/*
     Hash h;
-    struct ec_point_pair ab[];
-
+    struct {
+      EllipticCurvePoint a, b;
+    } ab[];
   };
 
+*/
   static inline size_t rs_comm_size(size_t pubs_count) {
      return sizeof(rs_comm) + pubs_count * sizeof(ec_point_pair);
   }
@@ -459,4 +471,3 @@ namespace Crypto {
     return sc_isnonzero(reinterpret_cast<unsigned char*>(&h)) == 0;
   }
 }
-

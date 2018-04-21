@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2017
-// Copyright (c) 2017-2018
-//
-//The CryptoNote developers, The Bytecoin developers and NPCoin developers
+// Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 //
 // This file is part of Bytecoin.
 //
-// NPCoin is free software: you can redistribute it and/or modify
+// Bytecoin is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// NPCoin is distributed in the hope that it will be useful,
+// Bytecoin is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with NPCoin.  If not, see <http://www.gnu.org/licenses/>.
+// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "PaymentGateService.h"
 
@@ -90,14 +87,11 @@ bool PaymentGateService::init(int argc, char** argv) {
   currencyBuilder.publicAddressBase58Prefix(config.coinBaseConfig.CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX);
   currencyBuilder.moneySupply(config.coinBaseConfig.MONEY_SUPPLY);
   currencyBuilder.buggedZawyDifficultyBlockIndex(config.coinBaseConfig.BUGGED_ZAWY_DIFFICULTY_BLOCK_INDEX);
+  currencyBuilder.zawyLWMADifficultyBlockIndex(config.coinBaseConfig.ZAWY_LWMA_DIFFICULTY_BLOCK_INDEX);
+  currencyBuilder.zawyLWMADifficultyLastBlock(config.coinBaseConfig.ZAWY_LWMA_DIFFICULTY_LAST_BLOCK);
+  currencyBuilder.zawyLWMADifficultyN(config.coinBaseConfig.ZAWY_LWMA_DIFFICULTY_N);
   currencyBuilder.zawyDifficultyBlockIndex(config.coinBaseConfig.ZAWY_DIFFICULTY_BLOCK_INDEX);
-  currencyBuilder.zawyDifficultyV2(config.coinBaseConfig.ZAWY_DIFFICULTY_V2);
-//uint8_t recognized as char
-  if (config.coinBaseConfig.ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION == 0) {
-    currencyBuilder.zawyDifficultyBlockVersion(config.coinBaseConfig.ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION);
-  } else {
-    currencyBuilder.zawyDifficultyBlockVersion(config.coinBaseConfig.ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION - '0');
-  }
+  currencyBuilder.zawyDifficultyLastBlock(config.coinBaseConfig.ZAWY_DIFFICULTY_LAST_BLOCK);
   currencyBuilder.genesisBlockReward(config.coinBaseConfig.GENESIS_BLOCK_REWARD);
   currencyBuilder.cryptonoteCoinVersion(config.coinBaseConfig.CRYPTONOTE_COIN_VERSION);
   currencyBuilder.tailEmissionReward(config.coinBaseConfig.TAIL_EMISSION_REWARD);
@@ -154,8 +148,14 @@ bool PaymentGateService::init(int argc, char** argv) {
     currencyBuilder.difficultyWindow(config.coinBaseConfig.DIFFICULTY_WINDOW);
   }
   currencyBuilder.difficultyLag(config.coinBaseConfig.DIFFICULTY_LAG);
-currencyBuilder.maxTransactionSizeLimit(config.coinBaseConfig.MAX_TRANSACTION_SIZE_LIMIT);
-currencyBuilder.fusionTxMaxSize(config.coinBaseConfig.MAX_TRANSACTION_SIZE_LIMIT * 30 / 100);
+if (config.coinBaseConfig.MAX_TRANSACTION_SIZE_LIMIT == 0) {
+  uint64_t maxTxSizeLimit = config.coinBaseConfig.CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE * 110 / 100 - CryptoNote::parameters::CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE;
+  currencyBuilder.maxTransactionSizeLimit(maxTxSizeLimit);
+  currencyBuilder.fusionTxMaxSize(maxTxSizeLimit * 30 / 100);
+} else {
+  currencyBuilder.maxTransactionSizeLimit(config.coinBaseConfig.MAX_TRANSACTION_SIZE_LIMIT);
+  currencyBuilder.fusionTxMaxSize(config.coinBaseConfig.MAX_TRANSACTION_SIZE_LIMIT * 30 / 100);
+}
   currencyBuilder.difficultyCut(config.coinBaseConfig.DIFFICULTY_CUT);
   if (config.coinBaseConfig.DIFFICULTY_WINDOW_V1 && config.coinBaseConfig.DIFFICULTY_WINDOW_V1 != 0)
   {
@@ -309,7 +309,7 @@ dbConfig.setDataDir(data_dir);
   std::unique_ptr<CryptoNote::INode> node(new CryptoNote::InProcessNode(core, protocol, *dispatcher));
 
   std::error_code nodeInitStatus;
-  node->init([&log, &nodeInitStatus](std::error_code ec) {
+  node->init([&nodeInitStatus](std::error_code ec) {
     nodeInitStatus = ec;
   });
 
