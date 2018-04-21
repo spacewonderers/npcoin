@@ -29,6 +29,13 @@
 * Boost 1.55 or later    (http://www.boost.org/)
 * MSVC 2013 (Windows only)
 
+Advanced options:
+
+Parallel build: run make -j<number of threads> instead of make.
+Debug build: run make build-debug.
+Test suite: run make test-release to run tests in addition to building. Running make test-debug will do the same to the debug version.
+Building with Clang: it may be possible to use Clang instead of GCC, but this may not work everywhere. To build, run export CC=clang CXX=clang++ before running make.
+
 ### Usage
 1. Download or compile the binaries
 2. Start the daemon:
