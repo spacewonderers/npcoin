@@ -19,7 +19,7 @@
 2. mkdir build
 3. cd build
 4. cmake.exe -DBOOST_ROOT=C:\boost_1_59_0 -DBOOST_LIBRARYDIR=C:\boost_1_59_0\libs -G "Visual Studio 15 Win64" ..
-5. Open Bytecoin.snl in Visual Studio 2017 and change target to "Release" "x64"
+5. Open Npcoin.sln in Visual Studio 2017 and change target to "Release" "x64"
 6. From the Solution explorer, build "external" and then build "ALL_BUILD"
 7. You will find your compiled files at build/src/Release (npcoind.exe, miner.exe, npcoinwallet.exe and walletd.exe)
 ```
