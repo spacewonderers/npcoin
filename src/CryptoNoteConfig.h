@@ -49,7 +49,7 @@ const uint32_t ZAWY_LWMA_DIFFICULTY_LAST_BLOCK                 = 0;
 const size_t ZAWY_LWMA_DIFFICULTY_N                 = 0;
 const uint32_t BUGGED_ZAWY_DIFFICULTY_BLOCK_INDEX                 = 0;
 const unsigned EMISSION_SPEED_FACTOR                         = 18;
-const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(3000000);
+const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(0);
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
 
 const size_t   CRYPTONOTE_REWARD_BLOCKS_WINDOW               = 100;
@@ -106,7 +106,7 @@ const char     CRYPTONOTE_BLOCKINDEXES_FILENAME[]            = "blockindexes.bin
 const char     CRYPTONOTE_POOLDATA_FILENAME[]                = "poolstate.bin";
 const char     P2P_NET_DATA_FILENAME[]                       = "p2pstate.bin";
 const char     MINER_CONFIG_FILE_NAME[]                      = "miner_conf.json";
-const char     GENESIS_COINBASE_TX_HEX[]                     = "010a01ff0001bd9fdd02029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd088071210138a62af6f9f22a5305490d4b64c8dbb333f154622add6f7fdb42f7616b151421";
+const char     GENESIS_COINBASE_TX_HEX[]                     = "";
 } // parameters
 
 const char     CRYPTONOTE_NAME[]                             = "npcoin";
@@ -156,11 +156,13 @@ struct CheckpointData {
   const char* blockId;
 };
 
-const std::initializer_list<CheckpointData> CHECKPOINTS = {  };
+const std::initializer_list<CheckpointData> CHECKPOINTS = {
+
+ {5000, "cb87f612fcc35e452fd0148d59b4c78802517bb9706fedd40c5493d2afba2f1a"},
+ {10000, "5bf0f41283b24a7cabd17185fcaba13aa77969683949d93993e97ab1a80a7888"}
+};
 
 } // CryptoNote
 
 #define ALLOW_DEBUG_COMMANDS
-
-
 
