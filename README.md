@@ -1,9 +1,6 @@
 ### About
 Forknote is innovative way to create Cryptonote (https://cryptonote.org) based cryptotokens. It gives the users the ability to create cryptotokens just by creating a simple configuration file.
 
-<<<<<<< HEAD
-=======
-
 ### To compile your coin on Ubuntu 16.04
 
 ```
@@ -26,7 +23,6 @@ Forknote is innovative way to create Cryptonote (https://cryptonote.org) based c
 6. From the Solution explorer, build "external" and then build "ALL_BUILD"
 7. You will find your compiled files at build/src/Release (npcoind.exe, miner.exe, npcoinwallet.exe and walletd.exe)
 ```
->>>>>>> f37d85346a2ac623155b89bbae50d6e13793b1b7
 ### Dependencies
 * GCC 4.7.3 or later     (http://gcc.gnu.org/)
 * CMake 2.8.6 or later   (http://www.cmake.org/)
