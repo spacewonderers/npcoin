@@ -24,7 +24,6 @@
 #include "Common/StringTools.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
 #include "CryptoNoteCore/Core.h"
-#include "CryptoNoteCore/Miner.h"
 #include "CryptoNoteCore/TransactionExtra.h"
 
 #include "CryptoNoteProtocol/CryptoNoteProtocolHandlerCommon.h"

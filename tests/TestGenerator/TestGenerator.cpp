@@ -19,7 +19,6 @@
 
 #include <Common/Math.h>
 #include "CryptoNoteCore/Account.h"
-#include "CryptoNoteCore/Miner.h"
 #include "CryptoNoteCore/TransactionExtra.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
 

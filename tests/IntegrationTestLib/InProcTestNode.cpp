@@ -24,7 +24,6 @@
 
 #include "CryptoNoteCore/Core.h"
 #include "CryptoNoteCore/MemoryBlockchainCacheFactory.h"
-#include "CryptoNoteCore/Miner.h"
 #include "CryptoNoteProtocol/CryptoNoteProtocolHandler.h"
 #include "P2p/NetNode.h"
 #include "InProcessNode/InProcessNode.h"
